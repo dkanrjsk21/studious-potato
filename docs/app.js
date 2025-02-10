@@ -1,7 +1,13 @@
 async function main() {
   async function hanldeCC(event) {
     event.preventDefault();
-    const url = "http://127.0.0.1:3000";
+
+    const spinner = document.createElement("div");
+    spinner.classList.add("spinner-border");
+
+    document.querySelector("#box").appendChild(spinner);
+
+    const url = "https://lightning-puzzled-side.glitch.me/";
     const formData = new FormData(document.querySelector("#ccForm"));
     const text = formData.get("text");
 
@@ -17,7 +23,18 @@ async function main() {
 
     const json = await response.json();
 
-    document.querySelector("#box").textContent = JSON.stringify(json);
+    const { image, desc } = json;
+
+    const box = document.querySelector("#box");
+    box.innerHTML = "";
+    const imageTag = document.createElement("img");
+    imageTag.classList.add("img-fluid");
+    imageTag.src = image; // image - link
+    const descTag = document.createElement("p");
+    descTag.textContent = desc;
+    box.appendChild(imageTag);
+    box.appendChild(descTag);
+    
   }
 
   //   document.querySelector("#ccBtn").addEventListener("click", hanldeCC);
